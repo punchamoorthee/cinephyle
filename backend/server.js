@@ -2,6 +2,7 @@ require("dotenv").config(); // Load environment variables
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const userRoutes = require('./routes/userRoutes');
 
 // Connect to database
 connectDB();
@@ -18,6 +19,9 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.get("/", (req, res) => {
   res.send("Cinpehyle backend is running!");
 });
+
+// Mount routes
+app.use('/api/v1/users', userRoutes);
 
 // Start the server
 app.listen(PORT, () => {
