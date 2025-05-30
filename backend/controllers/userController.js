@@ -2,12 +2,16 @@ const User = require("../models/User");
 
 // Intialize user profile in MongoDB if it doesn't exist
 exports.initializeUser = async (req, res, next) => {
-  const { uid, email, username } = req.user;
+  const { uid, email } = req.user;
 
-  if (!uid || !email || !username) {
+  console.log(uid, email);
+
+  if (!uid || !email) {
     return res
       .status(400)
-      .json({ message: "Firebase UID and email and username are required from token." });
+      .json({
+        message: "Firebase UID and email and username are required from token.",
+      });
   }
 
   try {
@@ -21,7 +25,6 @@ exports.initializeUser = async (req, res, next) => {
       const newUser = new User({
         firebaseUID: uid,
         email: email,
-        displayName: username.
       });
 
       await newUser.save();
@@ -31,11 +34,9 @@ exports.initializeUser = async (req, res, next) => {
     }
   } catch (error) {
     console.error("Error initializing user.", error);
-    res
-      .status(500)
-      .json({
-        message: "Server error during user initialization.",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Server error during user initialization.",
+      error: error.message,
+    });
   }
 };

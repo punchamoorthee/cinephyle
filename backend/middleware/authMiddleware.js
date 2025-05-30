@@ -1,7 +1,10 @@
-const verifyFirebaseToken = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
+const admin = require('../config/firebaseAdmin');
 
-  if (!authHeader || !authHeader.startWith("Bearer ")) {
+const verifyFirebaseToken = async (req, res, next) => {
+  const authHeader = req.query.Authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+
     return res.status(401).json({
       message: "Unauthorized: No token provided or invalid format.",
     });
