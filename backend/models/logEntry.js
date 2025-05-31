@@ -16,6 +16,9 @@ const logEntrySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    posterPath: {
+      type: String,
+    },
     rating: {
       type: Number,
       min: 0.5,
